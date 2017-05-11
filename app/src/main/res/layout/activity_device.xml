@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.insnergy.sample.view.DeviceActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textNewDevices"
+        android:text="1. 未註冊裝置列表(點擊選擇欲註冊裝置)"
+        android:layout_marginLeft="10dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:id="@+id/listViewNew"
+        android:layout_below="@+id/textNewDevices"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textHint"
+        android:text="2. 欲註冊的裝置 ID："
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/listViewNew" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/textSelectedDev"
+        android:text="device id"
+        android:layout_alignBaseline="@+id/textHint"
+        android:layout_alignBottom="@+id/textHint"
+        android:layout_toRightOf="@+id/textHint"
+        android:layout_toEndOf="@+id/textHint"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+        android:layout_below="@+id/textHint"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/editTextDevAlias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="欲註冊的裝置名稱"
+            android:maxLength="16"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="addDevice"
+            android:layout_weight="1"
+            android:alpha="0.3"
+            android:text="註冊裝置" />
+
+        <Button
+            android:id="@+id/btnScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="scanQRCode"
+            android:layout_weight="1"
+            android:text="掃描 QR" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textDevices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="3. 已註冊裝置列表\n(長按刪除 電力計可點擊進入排程設定)"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:background="#FFFFFFF0"
+        android:layout_below="@+id/textDevices"
+        android:layout_above="@+id/bottom" />
+
+    <include layout="@layout/menu_button"
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

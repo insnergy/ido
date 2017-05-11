@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.insnergy.sample.view.StatisticActivity">
+
+    <EditText
+        android:id="@+id/editTextMinEnd"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="59"
+        android:maxLength="4"
+        android:inputType="number"
+        android:layout_below="@+id/textEndTimeHint"
+        android:layout_toRightOf="@+id/editTextHourEnd"
+        android:layout_toEndOf="@+id/editTextHourEnd" />
+
+    <EditText
+        android:id="@+id/editTextHourEnd"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editTextDayEnd"
+        android:layout_alignBottom="@+id/editTextDayEnd"
+        android:layout_toEndOf="@+id/editTextDayEnd"
+        android:layout_toRightOf="@+id/editTextDayEnd"
+        android:ems="10"
+        android:hint="13"
+        android:inputType="number"
+        android:maxLength="4" />
+
+    <EditText
+        android:id="@+id/editTextDayEnd"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editTextMonthEnd"
+        android:layout_alignBottom="@+id/editTextMonthEnd"
+        android:layout_toEndOf="@+id/editTextMonthEnd"
+        android:layout_toRightOf="@+id/editTextMonthEnd"
+        android:ems="10"
+        android:hint="31"
+        android:inputType="number"
+        android:maxLength="4" />
+
+    <EditText
+        android:id="@+id/editTextMonthEnd"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editTextYearEnd"
+        android:layout_alignBottom="@+id/editTextYearEnd"
+        android:layout_toEndOf="@+id/editTextYearEnd"
+        android:layout_toRightOf="@+id/editTextYearEnd"
+        android:ems="10"
+        android:hint="12"
+        android:inputType="number"
+        android:maxLength="4" />
+
+    <EditText
+        android:id="@+id/editTextYearEnd"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textEndTimeHint"
+        android:layout_alignStart="@+id/textEndTimeHint"
+        android:layout_below="@+id/textEndTimeHint"
+        android:ems="10"
+        android:hint="2017"
+        android:inputType="number"
+        android:maxLength="4" />
+
+    <EditText
+        android:id="@+id/editTextYearStart"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textStartTimeHint"
+        android:layout_alignStart="@+id/textStartTimeHint"
+        android:layout_below="@+id/textStartTimeHint"
+        android:ems="10"
+        android:hint="2017"
+        android:inputType="number"
+        android:maxLength="4" />
+
+    <EditText
+        android:id="@+id/editTextMonthStart"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textStartTimeHint"
+        android:layout_toEndOf="@+id/editTextYearStart"
+        android:layout_toRightOf="@+id/editTextYearStart"
+        android:ems="10"
+        android:hint="12"
+        android:inputType="number"
+        android:maxLength="4" />
+
+    <EditText
+        android:id="@+id/editTextDayStart"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="31"
+        android:inputType="number"
+        android:maxLength="4"
+        android:layout_alignBaseline="@+id/editTextMonthStart"
+        android:layout_alignBottom="@+id/editTextMonthStart"
+        android:layout_toRightOf="@+id/editTextMonthStart"
+        android:layout_toEndOf="@+id/editTextMonthStart" />
+
+    <EditText
+        android:id="@+id/editTextHourStart"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textStartTimeHint"
+        android:layout_toEndOf="@+id/editTextDayStart"
+        android:layout_toRightOf="@+id/editTextDayStart"
+        android:ems="10"
+        android:hint="13"
+        android:inputType="number"
+        android:maxLength="4" />
+
+    <EditText
+        android:id="@+id/editTextMinStart"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textStartTimeHint"
+        android:layout_toEndOf="@+id/editTextHourStart"
+        android:layout_toRightOf="@+id/editTextHourStart"
+        android:ems="10"
+        android:hint="59"
+        android:inputType="number"
+        android:maxLength="4" />
+
+    <TextView
+        android:id="@+id/textDevIdHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="1. 欲查詢電力計ID(可手動修改)"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextDevId"
+        android:hint="device id"
+        android:layout_below="@+id/textDevIdHint"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textStatHint"
+        android:text="2. 選擇欲查詢統計區間(點擊切換)"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/editTextDevId"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_below="@+id/textStatHint" />
+
+    <TextView
+        android:id="@+id/textStartTimeHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner"
+        android:layout_marginLeft="10dp"
+        android:text="3. 點擊下方輸入欲查詢的統計資料開始時間"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textEndTimeHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextYearStart"
+        android:layout_alignStart="@+id/editTextYearStart"
+        android:layout_below="@+id/editTextYearStart"
+        android:text="4. 點擊下方輸入欲查詢的統計資料結束時間"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/btnGetStatistic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="getStatistics"
+        android:text="開始查詢"
+        android:alpha="0.3"
+        android:layout_alignBottom="@+id/editTextMinEnd"
+        android:layout_toRightOf="@+id/editTextMinEnd"
+        android:layout_toEndOf="@+id/editTextMinEnd" />
+
+    <include layout="@layout/menu_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

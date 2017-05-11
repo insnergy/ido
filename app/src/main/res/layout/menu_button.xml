@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutMenuList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:gravity="center"
+    android:background="@color/colorPrimary"
+    android:orientation="horizontal" >
+    <ImageView
+        android:id="@+id/imgSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@mipmap/login"
+        android:alpha="0.3"
+        android:scaleType="fitCenter"
+        android:onClick="toOtherActivity"/>
+    <ImageView
+        android:id="@+id/imgDevList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@mipmap/device_list"
+        android:alpha="0.3"
+        android:scaleType="fitCenter"
+        android:onClick="toOtherActivity" />
+    <ImageView
+        android:id="@+id/imgStat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@mipmap/summary"
+        android:alpha="0.3"
+        android:scaleType="fitCenter"
+        android:onClick="toOtherActivity" />
+    <ImageView
+        android:id="@+id/imgIdo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@mipmap/ido"
+        android:alpha="0.3"
+        android:scaleType="fitCenter"
+        android:onClick="toOtherActivity" />
+</LinearLayout>

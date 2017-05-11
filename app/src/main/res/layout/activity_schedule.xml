@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.insnergy.sample.view.ScheduleActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textHint1"
+        android:text="1. 選擇排程日期"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentTop="true" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/calendar"
+        android:onClick="showDatePickerDialog"
+        android:id="@+id/btnPickDate"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/textHint1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textHint2"
+        android:text="2. 選擇排程時間"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginRight="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/clock"
+        android:onClick="showTimePickerDialog"
+        android:id="@+id/btnPickTime"
+        android:layout_below="@+id/textHint2"
+        android:layout_alignLeft="@+id/textHint2"
+        android:layout_alignStart="@+id/textHint2" />
+
+    <TextView
+        android:id="@+id/textHint3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3. 選擇開啟或關閉"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/btnPickDate"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="關閉"
+        android:layout_below="@+id/textHint3"
+        android:layout_alignLeft="@+id/btnPickDate"
+        android:layout_alignStart="@+id/btnPickDate" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textHint4"
+        android:text="4. 確認欲新增排程"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/btnPickTime"
+        android:layout_alignLeft="@+id/btnPickTime"
+        android:layout_alignStart="@+id/btnPickTime" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateHint"
+        android:text="日期: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/textHint4"
+        android:layout_alignLeft="@+id/textHint4"
+        android:layout_alignStart="@+id/textHint4" />
+    <TextView
+        android:id="@+id/textTimeHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dateHint"
+        android:layout_alignStart="@+id/dateHint"
+        android:layout_below="@+id/dateHint"
+        android:text="時間: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/textSelectedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="date "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/textHint4"
+        android:layout_toRightOf="@+id/dateHint"
+        android:layout_toEndOf="@+id/dateHint" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textSelectedTime"
+        android:text="time"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/textSelectedDate"
+        android:layout_toRightOf="@+id/dateHint"
+        android:layout_toEndOf="@+id/dateHint" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="新增電力計排程"
+        android:id="@+id/btnAdd"
+        android:onClick="addSchedule"
+        android:alpha="0.3"
+        android:layout_below="@+id/checkBox"
+        android:layout_alignLeft="@+id/checkBox"
+        android:layout_alignStart="@+id/checkBox" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textListHint"
+        android:text="5. 排程列表(長按刪除)"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/btnAdd" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:id="@+id/listView"
+        android:layout_below="@+id/textListHint"/>
+
+</RelativeLayout>

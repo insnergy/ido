@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.insnergy.sample.view.IDoActivity">
+    <TextView
+        android:id="@+id/textPlanHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="1. 點擊下方輸入欲新增的計畫名稱"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name Of Plan"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_below="@+id/textPlanHint"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="新增 iDo 計劃"
+        android:id="@+id/btnAdd"
+        android:layout_below="@+id/editText"
+        android:onClick="addPlan"/>
+    <TextView
+        android:id="@+id/textListHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="2. 計畫列表\n(長按刪除 點擊進入規則及動作設定)"
+        android:layout_below="@+id/btnAdd"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:id="@+id/listView"
+        android:layout_below="@id/textListHint" />
+
+    <include layout="@layout/menu_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
