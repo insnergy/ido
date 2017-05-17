@@ -65,8 +65,6 @@ public class StatisticActivity extends AbstractAnimActivity {
         if (!isStartTimeValid() || !isEndTimeValid())
             return;
 
-        mStartTime = String.valueOf(sCalendar.getTimeInMillis());
-        mEndTime = String.valueOf(sCalendar.getTimeInMillis());
         String deviceId = ((EditText)findViewById(R.id.editTextDevId)).getText().toString();
         getStatistics(deviceId);
     }
@@ -123,9 +121,10 @@ public class StatisticActivity extends AbstractAnimActivity {
             return false;
         }
 
-        sCalendar.set(Integer.parseInt(yearStr), Integer.parseInt(monthStr), Integer.parseInt(dayStr));
+        sCalendar.set(Integer.parseInt(yearStr), Integer.parseInt(monthStr)-1, Integer.parseInt(dayStr));
         sCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourStr));
         sCalendar.set(Calendar.MINUTE, Integer.parseInt(minStr));
+        mStartTime = String.valueOf(sCalendar.getTimeInMillis());
         return true;
     }
 
@@ -151,14 +150,15 @@ public class StatisticActivity extends AbstractAnimActivity {
             return false;
         }
 
-        sCalendar.set(Integer.parseInt(yearStr), Integer.parseInt(monthStr), Integer.parseInt(dayStr));
+        sCalendar.set(Integer.parseInt(yearStr), Integer.parseInt(monthStr)-1, Integer.parseInt(dayStr));
         sCalendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourStr));
         sCalendar.set(Calendar.MINUTE, Integer.parseInt(minStr));
+        mEndTime = String.valueOf(sCalendar.getTimeInMillis());
         return true;
     }
 
     private void getStatistics(String deviceId) {
-        StatisticPresenter.getInstance().getDeviceStatistics(createDevStatForKWH(deviceId), new ApiCallback() {
+        StatisticPresenter.getInstance().getDeviceHistoryData(createDevStat(deviceId), new ApiCallback() {
             @Override
             public void onSuccess(ApiResult apiResult) {
                 Gson gson = new Gson();
@@ -175,11 +175,10 @@ public class StatisticActivity extends AbstractAnimActivity {
         });
     }
 
-    private DeviceStatistics createDevStatForKWH(String deviceId) {
+    private DeviceStatistics createDevStat(String deviceId) {
         DeviceStatistics stat = new DeviceStatistics();
         stat.setDev_id(deviceId);
-        stat.setAttributes(WidgetAttr.KWH);
-        stat.setStats_type(DeviceStatistics.Statistics_Type.getEnum(mSelectedItem));
+        stat.setStats_type(DeviceStatistics.StatType.getEnum(mSelectedItem));
         stat.setStart_time(mStartTime);
         stat.setEnd_time(mEndTime);
         return stat;

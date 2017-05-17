@@ -26,7 +26,7 @@ public class WidgetItemAdapter extends ArrayAdapter<Widget> {
     private LayoutInflater mLayoutInflater;
 
     public WidgetItemAdapter(Context context, List<Widget> items) {
-        super(context, R.layout.item_schedule, items);
+        super(context, R.layout.item_device, items);
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

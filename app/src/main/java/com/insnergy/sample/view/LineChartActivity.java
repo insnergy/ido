@@ -14,6 +14,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.google.gson.Gson;
 import com.insnergy.sample.R;
 import com.insnergy.sample.domainobj.ApiResult;
+import com.insnergy.sample.domainobj.Data;
+import com.insnergy.sample.domainobj.Device;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,9 +102,17 @@ public class LineChartActivity extends AppCompatActivity {
             String dataJson = extras.getString(DATA);
             Gson gson = new Gson();
             ApiResult apiResult = gson.fromJson(dataJson, ApiResult.class);
-            // TODO:
-        }
+            List<Device> devices = apiResult.getDevices();
 
+            if (devices.size() >= 1) {
+                List<Data> dataList = devices.get(0).getData();
+                List< Pair<String, Float> > deviceData = new ArrayList<>();
+                for (Data data : dataList) {
+                    deviceData.add(new Pair<>(data.getTime(), Float.valueOf(data.getValue())));
+                }
+                return deviceData;
+            }
+        }
 
         List< Pair<String, Float> > dotData = new ArrayList<>();
         dotData.add(new Pair<>("a", 1f));

@@ -168,7 +168,7 @@ public class DeviceActivity extends AbstractAnimActivity {
         String deviceAlias = ((EditText)findViewById(R.id.editTextDevAlias)).getText().toString();
 
         addDevice(mSelectedDevice.getDev_id(), mSelectedDevice.getDev_ext_type(), deviceAlias);
-//        addDevice("BN90600347FFFE34E52C", DeviceInfo.Ext_Type.GATEWAY_600, deviceAlias);
+//        addDevice("BN90600347______TEST", DeviceInfo.Ext_Type.GATEWAY_600, deviceAlias);
     }
 
     private void addDevice(String deviceId, DeviceInfo.Ext_Type deviceExtType, String deviceAlias) {

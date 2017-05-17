@@ -6,7 +6,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- App receives GCM messages. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!-- Android 4.0 -->
+    <uses-permission android:name="com.insnergy.family.permission.C2D_MESSAGE" />
+    <!-- Notification -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".MainApplication"
@@ -51,6 +56,7 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
             </intent-filter>
         </receiver>
+        <service android:name=".model.NotificationIntentService" />
 
         <activity android:name=".view.LineChartActivity"></activity>
     </application>

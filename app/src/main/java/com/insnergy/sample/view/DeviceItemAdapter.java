@@ -20,7 +20,7 @@ public class DeviceItemAdapter extends ArrayAdapter<Device> {
     private LayoutInflater mLayoutInflater;
 
     public DeviceItemAdapter(Context context, List<Device> items) {
-        super(context, R.layout.item_schedule, items);
+        super(context, R.layout.item_device, items);
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
