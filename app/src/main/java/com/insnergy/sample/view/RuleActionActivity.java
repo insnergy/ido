@@ -126,7 +126,7 @@ public class RuleActionActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String itemStr = spinnerRule.getSelectedItem().toString();
-                        mSelectedRuleDevId = itemStr.substring(itemStr.indexOf(SPLITTER)+3, itemStr.length());
+                        mSelectedRuleDevId = itemStr.substring(itemStr.indexOf(SPLITTER)+2, itemStr.length());
                     }
 
                     @Override
@@ -143,7 +143,7 @@ public class RuleActionActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String itemStr = spinnerAction.getSelectedItem().toString();
-                        mSelectedActionDevId = itemStr.substring(itemStr.indexOf(SPLITTER)+3, itemStr.length());
+                        mSelectedActionDevId = itemStr.substring(itemStr.indexOf(SPLITTER)+2, itemStr.length());
                     }
 
                     @Override
