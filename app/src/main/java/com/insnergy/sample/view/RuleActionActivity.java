@@ -33,6 +33,8 @@ public class RuleActionActivity extends AppCompatActivity {
     private static final String RULE_OUTLET_KWH_GE10 = "建立規則 即時功率≧10觸發" + SPLITTER;
     private static final String RULE_OUTLET_KWH_GE100 = "建立規則 即時功率≧100觸發" + SPLITTER;
     private static final String RULE_PIR = "建立移動偵測規則" + SPLITTER;
+    private static final String RULE_SENSOR_TEMPERATURE = "建立規則 溫度≧25觸發" + SPLITTER;
+    private static final String RULE_SENSOR_HUMIDITY = "建立規則 濕度≧80觸發" + SPLITTER;
 
     private static final String SIREN_DIDI = "Siren didi聲" + SPLITTER;
     private static final String SIREN_DOOR_BELL = "Siren 門鈴聲" + SPLITTER;
@@ -73,6 +75,12 @@ public class RuleActionActivity extends AppCompatActivity {
             } else if (ruleStr!=null && ruleStr.startsWith(RULE_OUTLET_KWH_GE100)) {
                 ruleActionGenerator.generateOutletRule(mSelectedRuleDevId, Rule.RULE_LIST.GE, "100")
                         .addNoticeAction(DataManager.getInstance().getEmail(), "電力計功率≧100通知");
+            } else if (ruleStr!=null && ruleStr.startsWith(RULE_SENSOR_TEMPERATURE)) {
+                ruleActionGenerator.generateTemperatureRule(mSelectedRuleDevId, Rule.RULE_LIST.GE, "25")
+                        .addNoticeAction(DataManager.getInstance().getEmail(), "溫度≧25通知");
+            } else if (ruleStr!=null && ruleStr.startsWith(RULE_SENSOR_HUMIDITY)) {
+                ruleActionGenerator.generateHumidityRule(mSelectedRuleDevId, Rule.RULE_LIST.GE, "80")
+                        .addNoticeAction(DataManager.getInstance().getEmail(), "濕度≧80通知");
             }
 
             String actionStr = ((Spinner)findViewById(R.id.spinnerAction)).getSelectedItem().toString();
@@ -100,17 +108,27 @@ public class RuleActionActivity extends AppCompatActivity {
                 for (Widget widget : apiResult.getWidgets()) {
                     if (Ext_Type.OUTLET_I18N_0910.equals(widget.getDev_ext_type())) {
                         // 電力計裝置
+                        // 可設定的 rule
                         spinnerRuleArray.add(RULE_OUTLET_KWH_GE10 + widget.getDev_id());
                         spinnerRuleArray.add(RULE_OUTLET_KWH_GE100 + widget.getDev_id());
+                        // 可設定的 action
                         spinnerActionArray.add(OUTLET_OPEN + widget.getDev_id());
                         spinnerActionArray.add(OUTLET_CLOSE + widget.getDev_id());
                     }
                     if (Ext_Type.SENSOR_IR_TRANSCEIVER.equals(widget.getDev_ext_type())) {
                         // PIR 裝置
+                        // 可設定的 rule
                         spinnerRuleArray.add(RULE_PIR + widget.getDev_id());
+                    }
+                    if (Ext_Type.SENSOR_HYGRO_212.equals(widget.getDev_ext_type())) {
+                        // 溫濕度裝置
+                        // 可設定的 rule
+                        spinnerRuleArray.add(RULE_SENSOR_TEMPERATURE + widget.getDev_id());
+                        spinnerRuleArray.add(RULE_SENSOR_HUMIDITY + widget.getDev_id());
                     }
                     if (Ext_Type.CONTROLLER_SIREN.equals(widget.getDev_ext_type())) {
                         // Siren 裝置
+                        // 可設定的 action
                         spinnerActionArray.add(SIREN_DIDI + widget.getDev_id());
                         spinnerActionArray.add(SIREN_DOOR_BELL + widget.getDev_id());
                     }

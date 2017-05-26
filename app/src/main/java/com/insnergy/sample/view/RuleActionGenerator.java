@@ -33,6 +33,32 @@ public class RuleActionGenerator {
         return this;
     }
 
+    public RuleActionGenerator generateTemperatureRule(String deviceId, Rule.RULE_LIST operator, String condition) {
+        mRule = new Rule();
+        mRule.setCategory(DeviceInfo.Category.SENSOR);
+        mRule.setDev_id(deviceId);
+        mRule.setDev_ext_type(DeviceInfo.Ext_Type.SENSOR_HYGRO_212);
+        mRule.setAttribute(DeviceInfo.WidgetAttr.TEMP);
+        mRule.setAttribute_type(Rule.RULE_ATTY_TYPE.Value);
+        mRule.setOperator(operator);
+        mRule.setCondition(condition);
+        mRule.setAction_list(new ArrayList<Action>());
+        return this;
+    }
+
+    public RuleActionGenerator generateHumidityRule(String deviceId, Rule.RULE_LIST operator, String condition) {
+        mRule = new Rule();
+        mRule.setCategory(DeviceInfo.Category.SENSOR);
+        mRule.setDev_id(deviceId);
+        mRule.setDev_ext_type(DeviceInfo.Ext_Type.SENSOR_HYGRO_212);
+        mRule.setAttribute(DeviceInfo.WidgetAttr.HUMID);
+        mRule.setAttribute_type(Rule.RULE_ATTY_TYPE.Value);
+        mRule.setOperator(operator);
+        mRule.setCondition(condition);
+        mRule.setAction_list(new ArrayList<Action>());
+        return this;
+    }
+
     public RuleActionGenerator generateOutletRule(String deviceId, Rule.RULE_LIST operator, String condition) {
         mRule = new Rule();
         mRule.setCategory(DeviceInfo.Category.OUTLET);
