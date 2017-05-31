@@ -3,8 +3,6 @@
  */
 package com.insnergy.sample.domainobj;
 
-import com.google.gson.annotations.SerializedName;
-
 public class DeviceStatistics {
     private String dev_id;
     private DeviceInfo.WidgetAttr attributes = DeviceInfo.WidgetAttr.ACTIVE_POWER;
@@ -13,12 +11,9 @@ public class DeviceStatistics {
     private String end_time;
 
     public enum StatType {
-        @SerializedName("dm60")
         Day("dm60"), //不可查詢超過24小時的範圍
-        @SerializedName("dm1w")
-        Week("dm1w"), //不可查詢超過31天的範圍
-        @SerializedName("dm1m")
-        Month("dm1m"); //不可查詢超過6週的範圍
+        Week("dm1di"), //不可查詢超過31天的範圍
+        Month("dm1di"); //不可查詢超過31天的範圍
 
         private String code;
 
