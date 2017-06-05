@@ -34,6 +34,10 @@ public class RegistrationIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isRegistered = sharedPreferences.getBoolean(SENT_TOKEN_TO_SERVER, false);
+        if (isRegistered) {
+            return;
+        }
 
         try {
             // [START register_for_gcm]
