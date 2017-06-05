@@ -97,9 +97,6 @@ public class DevicePresenter {
         HashMap<String, String> apiParams = new HashMap<>();
         apiParams.put("user_id", DataManager.getInstance().getEmail());
         apiParams.put("dev_id", deviceId);
-//        if (DeviceInfo.Category.SENSOR.equals(widget.getDev_category()) && (DeviceInfo.Ext_Type.SENSOR_6_IN_1.equals(widget.getDev_ext_type()) || DeviceInfo.Ext_Type.SENSOR_4_IN_1.equals(widget.getDev_ext_type()))) {
-//            apiParams.put("action_type", "1");
-//        }
         mApiManager.callApi("deleteDevice", apiCallback, apiParams);
     }
 
@@ -118,29 +115,6 @@ public class DevicePresenter {
         apiParams.put("value", voiceType.getCode());
         ApiManager.getInstance().callApi("controlSiren", apiCallback, apiParams);
     }
-
-//    public void addBleDevice(QRCodeInfo gatewayInfo, String deviceName, ApiCallback apiCallback) {
-//        HashMap<String, String> apiParams = new HashMap<String, String>();
-//        apiParams.put("user_id", DataManager.getInstance().getEmail());
-//        apiParams.put("dev_id", gatewayInfo.getDeviceId());
-//        apiParams.put("dev_ext_type", gatewayInfo.getDeviceExtType());
-//        apiParams.put("alias", encodeByURL(deviceName));
-//        apiParams.put("widget_mode", "true");
-//        apiParams.put("gw_dev_id", gatewayInfo.getGatewayId());
-//        apiParams.put("bt_mac", gatewayInfo.getBluetoothMac());
-//        apiParams.put("bt_scan_time", gatewayInfo.getScanTime());
-//        apiParams.put("bt_keep_time", gatewayInfo.getKeepTime());
-//        mApiManager.callApiWithoutCache("addBLEDevice", apiCallback, apiParams);
-//    }
-
-//    public void controlLossnayStatus(String deviceId, DeviceInfo.WidgetAttr widgetAttr, String value, ApiCallback apiCallback) {
-//        HashMap<String, String> apiParams = new HashMap<String, String>();
-//        apiParams.put("user_id", DataManager.getInstance().getEmail());
-//        apiParams.put("dev_id", deviceId);
-//        apiParams.put("attribute", widgetAttr.getCode());
-//        apiParams.put("value", value);
-//        mApiManager.callApi("controlLossnayStatus", apiCallback, apiParams);
-//    }
 
     private static String getTimeZone() {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.getDefault());

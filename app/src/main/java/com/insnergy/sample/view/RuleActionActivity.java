@@ -25,10 +25,12 @@ import com.insnergy.sample.presenter.DevicePresenter;
 import com.insnergy.sample.presenter.RulePresenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RuleActionActivity extends AppCompatActivity {
     public static final String PLAN_ID = "planId";
     private static final String SPLITTER = "：\n";
+    private static final int DEVICEID_OFFSET_OF_SPLITTER = 2;
 
     private static final String RULE_OUTLET_KWH_GE10 = "建立規則 即時功率≧10觸發" + SPLITTER;
     private static final String RULE_OUTLET_KWH_GE100 = "建立規則 即時功率≧100觸發" + SPLITTER;
@@ -57,9 +59,9 @@ public class RuleActionActivity extends AppCompatActivity {
         expListView.setAdapter(mRuleItemAdapter);
         expListView.setOnItemLongClickListener(getItemLongClickListener());
 
-        initSpinnerItems();
+        getRuleActionFromPlanId();
 
-        mPlanId = getRuleActionFromPlanId();
+        initSpinnerItems();
     }
 
     public void addRule(View view) {
@@ -102,71 +104,13 @@ public class RuleActionActivity extends AppCompatActivity {
         DevicePresenter.getInstance().getDeviceWidgets(new ApiCallback() {
             @Override
             public void onSuccess(ApiResult apiResult) {
-
                 ArrayList<String> spinnerRuleArray = new ArrayList<>();
                 ArrayList<String> spinnerActionArray = new ArrayList<>();
-                for (Widget widget : apiResult.getWidgets()) {
-                    if (Ext_Type.OUTLET_I18N_0910.equals(widget.getDev_ext_type())) {
-                        // 電力計裝置
-                        // 可設定的 rule
-                        spinnerRuleArray.add(RULE_OUTLET_KWH_GE10 + widget.getDev_id());
-                        spinnerRuleArray.add(RULE_OUTLET_KWH_GE100 + widget.getDev_id());
-                        // 可設定的 action
-                        spinnerActionArray.add(OUTLET_OPEN + widget.getDev_id());
-                        spinnerActionArray.add(OUTLET_CLOSE + widget.getDev_id());
-                    }
-                    if (Ext_Type.SENSOR_IR_TRANSCEIVER.equals(widget.getDev_ext_type())) {
-                        // PIR 裝置
-                        // 可設定的 rule
-                        spinnerRuleArray.add(RULE_PIR + widget.getDev_id());
-                    }
-                    if (Ext_Type.SENSOR_HYGRO_212.equals(widget.getDev_ext_type())) {
-                        // 溫濕度裝置
-                        // 可設定的 rule
-                        spinnerRuleArray.add(RULE_SENSOR_TEMPERATURE + widget.getDev_id());
-                        spinnerRuleArray.add(RULE_SENSOR_HUMIDITY + widget.getDev_id());
-                    }
-                    if (Ext_Type.CONTROLLER_SIREN.equals(widget.getDev_ext_type())) {
-                        // Siren 裝置
-                        // 可設定的 action
-                        spinnerActionArray.add(SIREN_DIDI + widget.getDev_id());
-                        spinnerActionArray.add(SIREN_DOOR_BELL + widget.getDev_id());
-                    }
-                }
 
-                //1. init rule spinner
-                ArrayAdapter<String> spinnerRuleAdapter = new ArrayAdapter<>(
-                        RuleActionActivity.this, android.R.layout.simple_list_item_1, spinnerRuleArray);
-                spinnerRuleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                final Spinner spinnerRule = (Spinner)findViewById(R.id.spinnerRule);
-                spinnerRule.setAdapter(spinnerRuleAdapter);
-                spinnerRule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        String itemStr = spinnerRule.getSelectedItem().toString();
-                        mSelectedRuleDevId = itemStr.substring(itemStr.indexOf(SPLITTER)+2, itemStr.length());
-                    }
+                getSpinnerItemsFromWidgets(apiResult.getWidgets(), spinnerRuleArray, spinnerActionArray);
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) { }
-                });
-
-                //2. init action spinner
-                ArrayAdapter<String> spinnerActionAdapter = new ArrayAdapter<>(
-                        RuleActionActivity.this, android.R.layout.simple_list_item_1, spinnerActionArray);
-                spinnerActionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                final Spinner spinnerAction = (Spinner)findViewById(R.id.spinnerAction);
-                spinnerAction.setAdapter(spinnerActionAdapter);
-                spinnerAction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        String itemStr = spinnerAction.getSelectedItem().toString();
-                        mSelectedActionDevId = itemStr.substring(itemStr.indexOf(SPLITTER)+2, itemStr.length());
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) { }
-                });
+                setupRuleSpinner(spinnerRuleArray);
+                setupActionSpinner(spinnerActionArray);
             }
 
             @Override
@@ -174,10 +118,12 @@ public class RuleActionActivity extends AppCompatActivity {
         });
     }
 
-    private String getRuleActionFromPlanId() {
+    private void getRuleActionFromPlanId() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String planId = extras.getString(PLAN_ID);
+            mPlanId = planId;
+
             mRulePresenter.getRuleList(planId, new ApiCallback() {
                 @Override
                 public void onSuccess(ApiResult apiResult) {
@@ -187,9 +133,7 @@ public class RuleActionActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(ApiResult apiResult) { }
             });
-            return planId;
         }
-        return "";
     }
 
     private AdapterView.OnItemLongClickListener getItemLongClickListener() {
@@ -240,6 +184,79 @@ public class RuleActionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(ApiResult apiResult) { }
+        });
+    }
+
+    private void getSpinnerItemsFromWidgets(List<Widget> widgetList,
+                                            ArrayList<String> spinnerRuleArray,
+                                            ArrayList<String> spinnerActionArray) {
+        for (Widget widget : widgetList) {
+            if (Ext_Type.OUTLET_I18N_0910.equals(widget.getDev_ext_type())) {
+                // 電力計裝置
+                // 可設定的 rule
+                spinnerRuleArray.add(RULE_OUTLET_KWH_GE10 + widget.getDev_id());
+                spinnerRuleArray.add(RULE_OUTLET_KWH_GE100 + widget.getDev_id());
+                // 可設定的 action
+                spinnerActionArray.add(OUTLET_OPEN + widget.getDev_id());
+                spinnerActionArray.add(OUTLET_CLOSE + widget.getDev_id());
+            }
+            if (Ext_Type.SENSOR_IR_TRANSCEIVER.equals(widget.getDev_ext_type())) {
+                // PIR 裝置
+                // 可設定的 rule
+                spinnerRuleArray.add(RULE_PIR + widget.getDev_id());
+            }
+            if (Ext_Type.SENSOR_HYGRO_212.equals(widget.getDev_ext_type())) {
+                // 溫濕度裝置
+                // 可設定的 rule
+                spinnerRuleArray.add(RULE_SENSOR_TEMPERATURE + widget.getDev_id());
+                spinnerRuleArray.add(RULE_SENSOR_HUMIDITY + widget.getDev_id());
+            }
+            if (Ext_Type.CONTROLLER_SIREN.equals(widget.getDev_ext_type())) {
+                // Siren 裝置
+                // 可設定的 action
+                spinnerActionArray.add(SIREN_DIDI + widget.getDev_id());
+                spinnerActionArray.add(SIREN_DOOR_BELL + widget.getDev_id());
+            }
+        }
+    }
+
+    private void setupRuleSpinner(ArrayList<String> spinnerRuleArray) {
+        final Spinner spinnerRule = (Spinner)findViewById(R.id.spinnerRule);
+
+        ArrayAdapter<String> spinnerRuleAdapter = new ArrayAdapter<>(
+                RuleActionActivity.this, android.R.layout.simple_list_item_1, spinnerRuleArray);
+        spinnerRuleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerRule.setAdapter(spinnerRuleAdapter);
+        spinnerRule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemStr = spinnerRule.getSelectedItem().toString();
+                mSelectedRuleDevId = itemStr.substring(itemStr.indexOf(SPLITTER)+DEVICEID_OFFSET_OF_SPLITTER, itemStr.length());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+    }
+
+    private void setupActionSpinner(ArrayList<String> spinnerActionArray) {
+        final Spinner spinnerAction = (Spinner)findViewById(R.id.spinnerAction);
+
+        ArrayAdapter<String> spinnerActionAdapter = new ArrayAdapter<>(
+                RuleActionActivity.this, android.R.layout.simple_list_item_1, spinnerActionArray);
+        spinnerActionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerAction.setAdapter(spinnerActionAdapter);
+        spinnerAction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemStr = spinnerAction.getSelectedItem().toString();
+                mSelectedActionDevId = itemStr.substring(itemStr.indexOf(SPLITTER)+DEVICEID_OFFSET_OF_SPLITTER, itemStr.length());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 }

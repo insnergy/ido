@@ -17,6 +17,8 @@ import com.insnergy.sample.domainobj.Rule;
 
 import java.util.List;
 
+import static com.insnergy.sample.domainobj.DeviceInfo.WidgetAttr.MOTION_STATUS;
+
 public class RuleItemAdapter extends BaseExpandableListAdapter {
 
     private LayoutInflater mLayoutInflater;
@@ -101,28 +103,10 @@ public class RuleItemAdapter extends BaseExpandableListAdapter {
         TextView txtAttr = (TextView) view.findViewById(R.id.txtAttr);
         TextView txtOperator = (TextView) view.findViewById(R.id.txtOperator);
         TextView txtCondition = (TextView) view.findViewById(R.id.txtCondition);
-        switch (rule.getAttribute()) {
-            case ACTIVE_POWER:
-                txtAttr.setText("即時功率");
-                switch (rule.getOperator()) {
-                    case GE:
-                        txtOperator.setText(Rule.GE);
-                        break;
-                    case EQ:
-                        txtOperator.setText(Rule.EQ);
-                        break;
-                    case LT:
-                        txtOperator.setText(Rule.LT);
-                        break;
-                }
-                txtCondition.setText(rule.getCondition() + " 時觸發");
-                break;
-            case MOTION_STATUS:
-                txtAttr.setText("偵測到物體移動時觸發");
-                txtOperator.setText("");
-                txtCondition.setText("");
-                break;
-        }
+
+        setupTextAttrOfRule(rule, txtAttr);
+        setupTextOperatorOfRule(rule, txtOperator);
+        setupTextConditionOfRule(rule, txtCondition);
 
         return view;
     }
@@ -167,5 +151,48 @@ public class RuleItemAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return false;
+    }
+
+    private void setupTextAttrOfRule(Rule rule, TextView txtAttr) {
+        switch (rule.getAttribute()) {
+            case MOTION_STATUS:
+                txtAttr.setText("偵測到物體移動時觸發");
+                break;
+            case ACTIVE_POWER:
+                txtAttr.setText("即時功率");
+                break;
+            case TEMP:
+                txtAttr.setText("溫度");
+                break;
+            case HUMID:
+                txtAttr.setText("濕度");
+                break;
+        }
+    }
+
+    private void setupTextOperatorOfRule(Rule rule, TextView txtOperator) {
+        switch (rule.getOperator()) {
+            case GE:
+                txtOperator.setText(Rule.GE);
+                break;
+            case EQ:
+                txtOperator.setText(Rule.EQ);
+                break;
+            case LT:
+                txtOperator.setText(Rule.LT);
+                break;
+        }
+
+        if (MOTION_STATUS.equals(rule.getAttribute())) {
+            txtOperator.setText("");
+        }
+    }
+
+    private void setupTextConditionOfRule(Rule rule, TextView txtCondition) {
+        txtCondition.setText(rule.getCondition() + " 時觸發");
+
+        if (MOTION_STATUS.equals(rule.getAttribute())) {
+            txtCondition.setText("");
+        }
     }
 }

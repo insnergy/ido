@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">範例</string>
+    <string name="delete_message">確定要刪除</string>
+    <string name="delete_yes">是</string>
+    <string name="delete_no">否!</string>
+
+    <string-array name="statistic_type">
+        <item>日</item>
+        <item>週</item>
+        <item>月</item>
+    </string-array>
+</resources>
