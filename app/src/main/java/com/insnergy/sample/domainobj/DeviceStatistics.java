@@ -11,23 +11,36 @@ public class DeviceStatistics {
     private String end_time;
 
     public enum StatType {
-        Day("dm60"), //不可查詢超過24小時的範圍
-        Week("dm1di"), //不可查詢超過31天的範圍
-        Month("dm1di"); //不可查詢超過31天的範圍
+        Day("dm60", "日", "日"), //不可查詢超過24小時的範圍
+        Week("dm1di", "週", "周"), //不可查詢超過31天的範圍
+        Month("dm1di", "月", "月"); //不可查詢超過31天的範圍
 
         private String code;
+        private String tw;
+        private String cn;
 
-        StatType(String code) {
+        StatType(String code, String tw, String cn) {
             this.code = code;
+            this.tw = tw;
+            this.cn = cn;
         }
 
         public String getCode() {
             return this.code;
         }
 
+        public String getTW() {
+            return this.tw;
+        }
+
+        public String getCN() {
+            return this.cn;
+        }
+
         public static StatType getEnum(String type) {
-            for(StatType stat : values() ) {
-                if (stat.name().equalsIgnoreCase(type)) {
+            for(StatType stat : values()) {
+                if (stat.name().equalsIgnoreCase(type) ||
+                        stat.getTW().equals(type) || stat.getCN().equals(type)) {
                     return stat;
                 }
             }

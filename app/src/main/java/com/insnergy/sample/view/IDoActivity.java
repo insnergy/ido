@@ -50,9 +50,7 @@ public class IDoActivity extends AbstractAnimActivity {
             }
 
             @Override
-            public void onFailure(ApiResult apiResult) {
-
-            }
+            public void onFailure(ApiResult apiResult) { }
         });
     }
 
@@ -68,9 +66,7 @@ public class IDoActivity extends AbstractAnimActivity {
             }
 
             @Override
-            public void onFailure(ApiResult apiResult) {
-
-            }
+            public void onFailure(ApiResult apiResult) { }
         });
     }
 
@@ -78,12 +74,12 @@ public class IDoActivity extends AbstractAnimActivity {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                enterRule((Plan)parent.getAdapter().getItem(position));
+                showRuleAction((Plan)parent.getAdapter().getItem(position));
             }
         };
     }
 
-    private void enterRule(Plan plan) {
+    private void showRuleAction(Plan plan) {
         startActivity(new Intent(getApplicationContext(), RuleActionActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 .putExtra(RuleActionActivity.PLAN_ID, plan.getPlan_id())
@@ -128,9 +124,7 @@ public class IDoActivity extends AbstractAnimActivity {
             }
 
             @Override
-            public void onFailure(ApiResult apiResult) {
-
-            }
+            public void onFailure(ApiResult apiResult) { }
         });
     }
 }

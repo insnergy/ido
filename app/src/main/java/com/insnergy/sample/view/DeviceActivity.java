@@ -49,6 +49,8 @@ public class DeviceActivity extends AbstractAnimActivity {
         setContentView(R.layout.activity_device);
         setCurrentTabEnabled(R.id.imgDevList);
 
+        Log.d(TAG, "onCreate here");
+
         ListView listViewNewDev = (ListView) findViewById(R.id.listViewNew);
         listViewNewDev.setOnItemClickListener(getNewDevItemClickListener());
         mNewDevItemAdapter = new DeviceItemAdapter(this, new ArrayList<Device>());
@@ -81,7 +83,7 @@ public class DeviceActivity extends AbstractAnimActivity {
         });
 
         // 1. 取得未註冊裝置列表
-        getNewDevice();
+        getNewDevices();
 
         // 2. 取得已註冊裝置列表
         getDevices();
@@ -176,7 +178,21 @@ public class DeviceActivity extends AbstractAnimActivity {
             @Override
             public void onSuccess(ApiResult apiResult) {
                 getDevices();
-                getNewDevice();
+                getNewDevices();
+            }
+
+            @Override
+            public void onFailure(ApiResult apiResult) { }
+        });
+    }
+
+    private void getNewDevices() {
+        mDevicePresenter.getNewDevices(new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResult apiResult) {
+                mNewDevItemAdapter.clear();
+                mNewDevItemAdapter.addAll(apiResult.getDevices());
+                mNewDevItemAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -198,20 +214,6 @@ public class DeviceActivity extends AbstractAnimActivity {
         });
     }
 
-    private void getNewDevice() {
-        mDevicePresenter.getNewDevice(new ApiCallback() {
-            @Override
-            public void onSuccess(ApiResult apiResult) {
-                mNewDevItemAdapter.clear();
-                mNewDevItemAdapter.addAll(apiResult.getDevices());
-                mNewDevItemAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(ApiResult apiResult) { }
-        });
-    }
-
     private void deleteDevice(final Widget widget) {
         mDevicePresenter.deleteDevice(widget.getDev_id(), new ApiCallback() {
             @Override
@@ -219,7 +221,7 @@ public class DeviceActivity extends AbstractAnimActivity {
                 mWidgetItemAdapter.remove(widget);
                 mWidgetItemAdapter.notifyDataSetChanged();
 
-                getNewDevice();
+                getNewDevices();
             }
 
             @Override

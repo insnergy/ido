@@ -43,23 +43,16 @@ public class DevicePresenter {
         mApiManager.callApi("addDevice", apiCallback, apiParams);
     }
 
-    public void addWifiDevice(String gatewayId, String deviceId, DeviceInfo.Ext_Type deviceType, String deviceName, ApiCallback apiCallback) {
-        HashMap<String, String> apiParams = new HashMap<String, String>();
-        apiParams.put("user_id", DataManager.getInstance().getEmail());
-        apiParams.put("widget_mode", Boolean.TRUE.toString());
-        apiParams.put("dev_id", gatewayId);
-        apiParams.put("dev_ext_type", deviceType.getCode());
-        apiParams.put("timezone", getTimeZone());
-        apiParams.put("alias", encodeByURL(deviceName));
-        apiParams.put("icon", "");
-        apiParams.put("child_dev_id[]", deviceId);
-        mApiManager.callApi("addWiFiDevice", apiCallback, apiParams);
-    }
-
     public void getDeviceList(ApiCallback apiCallback) {
         HashMap<String, String> apiParams = new HashMap<>();
         apiParams.put("user_id", DataManager.getInstance().getEmail());
         mApiManager.callApi("getMyDevices", apiCallback, apiParams);
+    }
+
+    public void getNewDevices(ApiCallback apiCallback) {
+        HashMap<String, String> apiParams = new HashMap<>();
+        apiParams.put("user_id", DataManager.getInstance().getEmail());
+        mApiManager.callApiWithoutCache("getNewDevice", apiCallback, apiParams);
     }
 
     public void getDeviceWidgets(ApiCallback apiCallback) {
@@ -69,12 +62,6 @@ public class DevicePresenter {
         mApiManager.callApi("getDeviceWidget", apiCallback, apiParams);
     }
 
-    public void getNewDevice(ApiCallback apiCallback) {
-        HashMap<String, String> apiParams = new HashMap<>();
-        apiParams.put("user_id", DataManager.getInstance().getEmail());
-        mApiManager.callApiWithoutCache("getNewDevice", apiCallback, apiParams);
-    }
-
     public void editDevice(String widget_inst_id, String alias, String icon, ApiCallback apiCallback) {
         HashMap<String, String> apiParams = new HashMap<String, String>();
         apiParams.put("user_id", DataManager.getInstance().getEmail());
@@ -82,15 +69,6 @@ public class DevicePresenter {
         apiParams.put("alias", encodeByURL(alias));
         apiParams.put("icon", icon);
         mApiManager.callApi("putDevice", apiCallback, apiParams);
-    }
-
-    public void editSubDevice(String widget_inst_id, String alias, String icon, ApiCallback apiCallback) {
-        HashMap<String, String> apiParams = new HashMap<String, String>();
-        apiParams.put("user_id", DataManager.getInstance().getEmail());
-        apiParams.put("widget_inst_id", widget_inst_id);
-        apiParams.put("sub_alias", encodeByURL(alias));
-        apiParams.put("sub_icon", icon);
-        mApiManager.callApi("putSubDevice", apiCallback, apiParams);
     }
 
     public void deleteDevice(String deviceId, ApiCallback apiCallback) {
@@ -105,7 +83,7 @@ public class DevicePresenter {
         apiParams.put("user_id", DataManager.getInstance().getEmail());
         apiParams.put("dev_id", deviceId);
         apiParams.put("value", action.getCode());
-        mApiManager.clearAllCacheThenCallApi("controlSyncSwitch", apiCallback, apiParams);
+        mApiManager.callApi("controlSyncSwitch", apiCallback, apiParams);
     }
 
     public void controlSiren(final String deviceId, Action.Siren_Voice_Type voiceType, ApiCallback apiCallback) {
@@ -113,7 +91,7 @@ public class DevicePresenter {
         apiParams.put("user_id", DataManager.getInstance().getEmail());
         apiParams.put("dev_id", deviceId);
         apiParams.put("value", voiceType.getCode());
-        ApiManager.getInstance().callApi("controlSiren", apiCallback, apiParams);
+        mApiManager.callApi("controlSiren", apiCallback, apiParams);
     }
 
     private static String getTimeZone() {

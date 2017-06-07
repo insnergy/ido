@@ -26,13 +26,18 @@ import android.widget.TimePicker;
 import com.insnergy.sample.R;
 import com.insnergy.sample.domainobj.ApiResult;
 import com.insnergy.sample.domainobj.ScheduleFreq;
+import com.insnergy.sample.domainobj.ScheduleFreqDaily;
 import com.insnergy.sample.domainobj.ScheduleFreqOnce;
+import com.insnergy.sample.domainobj.ScheduleFreqWeekly;
+import com.insnergy.sample.domainobj.ScheduleInfo.WEEK;
 import com.insnergy.sample.domainobj.ScheduleInfo.ACTION;
 import com.insnergy.sample.model.ApiCallback;
 import com.insnergy.sample.presenter.SchedulePresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ScheduleActivity extends AppCompatActivity {
     private static final String TAG = "ScheduleActivity";
@@ -93,7 +98,7 @@ public class ScheduleActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             sSelectedYear = year;
-            sSelectedMonth = month + 1;
+            sSelectedMonth = month + 1; //magic number!
             sSelectedDay = day;
             sTextViewSelectedDate.setText(sSelectedYear + "-" + sSelectedMonth + "-" + sSelectedDay);
             checkIsButtonEnabled();
@@ -139,30 +144,19 @@ public class ScheduleActivity extends AppCompatActivity {
         if (mDeviceId == null || !checkIsButtonEnabled())
             return;
 
-        ACTION enable = (((CheckBox)findViewById(R.id.checkBox)).isChecked())? ACTION.ON: ACTION.OFF;
+        ACTION isEnable = (((CheckBox)findViewById(R.id.checkBox)).isChecked())? ACTION.ON: ACTION.OFF;
 
-        ScheduleFreqOnce freqOnce = new ScheduleFreqOnce(
-                mDeviceId, enable, sSelectedYear, sSelectedMonth, sSelectedDay, sSelectedHour, sSelectedMinute);
-        mScheduler.addSchedule(freqOnce, new ApiCallback() {
-            @Override
-            public void onSuccess(ApiResult apiResult) {
-                getScheduleList();
-            }
+        // 單次排程設定
+        addOnceSchedule(mDeviceId, isEnable, sSelectedYear, sSelectedMonth, sSelectedDay, sSelectedHour, sSelectedMinute);
 
-            @Override
-            public void onFailure(ApiResult apiResult) { }
-        });
+        // 每日排程設定
+//        addDailySchedule(mDeviceId, isEnable, sSelectedHour, sSelectedMinute);
 
-//        ScheduleFreqDaily freqDaily = new ScheduleFreqDaily(
-//                deviceId, enable, sSelectedHour, sSelectedMinute);
-//        mScheduler.addSchedule(freqDaily, null);
-//
+        // 每週排程設定
 //        Set<WEEK> weeks = new HashSet<>();
 //        weeks.add(WEEK.MON);
 //        weeks.add(WEEK.TUE);
-//        ScheduleFreqWeekly freqWeekly = new ScheduleFreqWeekly(
-//                deviceId, enable, weeks, sSelectedHour, sSelectedMinute);
-//        mScheduler.addSchedule(freqWeekly, null);
+//        addWeeklySchedule(mDeviceId, isEnable, weeks, sSelectedHour, sSelectedMinute);
     }
 
     private static boolean checkIsButtonEnabled() {
@@ -269,5 +263,51 @@ public class ScheduleActivity extends AppCompatActivity {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void addOnceSchedule(String deviceId, ACTION isEnable,
+                                 int selectedYear, int selectedMonth,
+                                 int selectedDay, int selectedHour, int selectedMinute) {
+        ScheduleFreqOnce freqOnce = new ScheduleFreqOnce(
+                deviceId, isEnable, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute);
+        mScheduler.addSchedule(freqOnce, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResult apiResult) {
+                getScheduleList();
+            }
+
+            @Override
+            public void onFailure(ApiResult apiResult) { }
+        });
+    }
+
+    private void addDailySchedule(String deviceId, ACTION isEnable,
+                                  int selectedHour, int selectedMinute) {
+        ScheduleFreqDaily freqDaily = new ScheduleFreqDaily(
+                deviceId, isEnable, selectedHour, selectedMinute);
+        mScheduler.addSchedule(freqDaily, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResult apiResult) {
+                getScheduleList();
+            }
+
+            @Override
+            public void onFailure(ApiResult apiResult) { }
+        });
+    }
+
+    private void addWeeklySchedule(String deviceId, ACTION isEnable,
+                                   Set<WEEK> weeks, int selectedHour, int selectedMinute) {
+        ScheduleFreqWeekly freqWeekly = new ScheduleFreqWeekly(
+                deviceId, isEnable, weeks, selectedHour, selectedMinute);
+        mScheduler.addSchedule(freqWeekly, new ApiCallback() {
+            @Override
+            public void onSuccess(ApiResult apiResult) {
+                getScheduleList();
+            }
+
+            @Override
+            public void onFailure(ApiResult apiResult) { }
+        });
     }
 }

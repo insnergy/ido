@@ -31,7 +31,7 @@ public class StatisticActivity extends AbstractAnimActivity {
     private static final String TAG = "StatisticActivity";
 
     private static GregorianCalendar sCalendar = new GregorianCalendar();
-    private String mSelectedItem = "Hour";
+    private String mSelectedItem = "Day";
     private String mStartTime;
     private String mEndTime;
 
@@ -169,9 +169,7 @@ public class StatisticActivity extends AbstractAnimActivity {
             }
 
             @Override
-            public void onFailure(ApiResult apiResult) {
-
-            }
+            public void onFailure(ApiResult apiResult) { }
         });
     }
 
