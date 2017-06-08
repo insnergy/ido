@@ -225,9 +225,7 @@ public class DeviceActivity extends AbstractAnimActivity {
             }
 
             @Override
-            public void onFailure(ApiResult apiResult) {
-
-            }
+            public void onFailure(ApiResult apiResult) { }
         });
     }
 
@@ -263,13 +261,13 @@ public class DeviceActivity extends AbstractAnimActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final Widget item  = (Widget)parent.getAdapter().getItem(position);
-                showAlertDialogToDeleteSchedule(item);
+                showAlertDialogToDeleteDevice(item);
                 return true;
             }
         };
     }
 
-    private void showAlertDialogToDeleteSchedule(final Widget item) {
+    private void showAlertDialogToDeleteDevice(final Widget item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(DeviceActivity.this);
         builder.setCancelable(false);
         builder.setMessage(R.string.delete_message)

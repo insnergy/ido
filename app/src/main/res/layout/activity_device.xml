@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:onClick="scanQRCode"
             android:layout_weight="1"
-            android:text="掃描 QR" />
+            android:text="@string/scan_qr" />
     </LinearLayout>
 
     <TextView

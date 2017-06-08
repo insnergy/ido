@@ -141,13 +141,13 @@ public class RuleActionActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final Rule item  = (Rule)parent.getAdapter().getItem(position);
-                showAlertDialogToDeletePlan(item);
+                showAlertDialogToDeleteRule(item);
                 return true;
             }
         };
     }
 
-    private void showAlertDialogToDeletePlan(final Rule item) {
+    private void showAlertDialogToDeleteRule(final Rule item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(RuleActionActivity.this);
         builder.setCancelable(false);
         builder.setMessage(R.string.delete_message)

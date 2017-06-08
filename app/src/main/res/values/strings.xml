@@ -3,6 +3,7 @@
     <string name="delete_message">delete or not</string>
     <string name="delete_yes">Yes</string>
     <string name="delete_no">No!!!</string>
+    <string name="scan_qr">scan QR</string>
 
     <string-array name="statistic_type">
         <item>Day</item>
